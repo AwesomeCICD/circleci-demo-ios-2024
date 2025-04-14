@@ -5,12 +5,15 @@ orbs:
   macos: circleci/macos@2.4.1
   app-distribution: tadashi0713/app-distribution@1.0.7
 
-jobs:
-  unit_test:
+executors:
+  m2pro-default:
     macos:
       xcode: 14.3.1
     resource_class: m2pro.large
 
+jobs:
+  unit_test:
+    executor: m2pro-default
     steps:
       - checkout
       # Ruby Orb(Install fastlane)
@@ -21,10 +24,7 @@ jobs:
           path: fastlane/test_output/report.junit
 
   ui_test:
-    macos:
-      xcode: 14.3.1
-    resource_class: m2pro.large
-
+    executor: m2pro-default
     steps:
       - checkout
       # Preboot iOS Simulator
@@ -37,10 +37,7 @@ jobs:
           path: fastlane/test_output/report.junit
 
   build_for_ui_test:
-    macos:
-      xcode: 14.3.1
-    resource_class: m2pro.large
-
+    executor: m2pro-default
     steps:
       - checkout
       - ruby/install-deps
@@ -51,11 +48,8 @@ jobs:
             - dist
 
   ui_test_parallel:
-    parallelism: 4
-    macos:
-      xcode: 14.3.1
-    resource_class: m2pro.large
-
+    parallelism: 25
+    executor: m2pro-default
     steps:
       - checkout
       - macos/preboot-simulator:
@@ -79,10 +73,7 @@ jobs:
           path: fastlane/test_output/report.junit
 
   beta:
-    macos:
-      xcode: 14.3.1
-    resource_class: m2pro.large
-
+    executor: m2pro-default
     steps:
       - checkout
       - ruby/install-deps
