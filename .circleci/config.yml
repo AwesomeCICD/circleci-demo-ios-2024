@@ -79,8 +79,8 @@ jobs:
       - ruby/install-deps
       - run: bundle exec fastlane build_for_ui_test
       - run: ls -lah
-      #- app-distribution/upload_ios:
-      #    path: CircleCIDemo.ipa
+      - app-distribution/upload_ios:
+          path: CircleCIDemo.ipa
       #- app-distribution/comment_github_pr
       #- persist_to_workspace:
       #    root: .
@@ -90,12 +90,12 @@ jobs:
 workflows:
   main:
     jobs:
-      #- unit_test
-      #- ui_test
-      #- build_for_ui_test
-      #- ui_test_parallel:
-      #    requires:
-      #      - build_for_ui_test
+      - unit_test
+      - ui_test
+      - build_for_ui_test
+      - ui_test_parallel:
+          requires:
+            - build_for_ui_test
       - beta
              #context: # Context
              #  - mobile
