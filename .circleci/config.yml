@@ -96,7 +96,7 @@ workflows:
       - ui_test_parallel:
           requires:
             - build_for_ui_test
-      - beta
+      #- beta
              #context: # Context
              #  - mobile
              #  - app-distribution
